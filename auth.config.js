@@ -41,7 +41,10 @@ export default {
             }
 
         })
+
     ],
+    secret: process.env.secret,
+
     callbacks: {
         signIn: async (user, account) => {
 
