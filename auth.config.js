@@ -36,7 +36,6 @@ export default {
                     throw new CredentialsSignin({ cause: "Invalid email or password" });
                 }
 
-                // If the credentials are valid, return the user object
                 return { id: user.id, email: user.email };
             }
 

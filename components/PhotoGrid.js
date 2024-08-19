@@ -32,6 +32,84 @@ const PostCard = () => {
             likes: 450,
             views: 800,
         },
+        {
+            id: 1,
+            images: [
+                "https://images.unsplash.com/photo-1723142483664-1568bd19eb2c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "https://images.unsplash.com/photo-1723395439527-20f1c97e035c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "https://plus.unsplash.com/premium_photo-1671599016130-7882dbff302f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cXVvdGVzfGVufDB8fDB8fHww",
+            ],
+            likes: 400,
+            views: 700,
+        },
+        {
+            id: 2,
+            images: [
+                "https://images.unsplash.com/photo-1723395439527-20f1c97e035c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            ],
+            likes: 350,
+            views: 600,
+        },
+        {
+            id: 3,
+            images: [
+                "https://plus.unsplash.com/premium_photo-1671599016130-7882dbff302f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cXVvdGVzfGVufDB8fDB8fHww",
+            ],
+            likes: 450,
+            views: 800,
+        },
+        {
+            id: 1,
+            images: [
+                "https://images.unsplash.com/photo-1723142483664-1568bd19eb2c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "https://images.unsplash.com/photo-1723395439527-20f1c97e035c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "https://plus.unsplash.com/premium_photo-1671599016130-7882dbff302f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cXVvdGVzfGVufDB8fDB8fHww",
+            ],
+            likes: 400,
+            views: 700,
+        },
+        {
+            id: 2,
+            images: [
+                "https://images.unsplash.com/photo-1723395439527-20f1c97e035c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            ],
+            likes: 350,
+            views: 600,
+        },
+        {
+            id: 3,
+            images: [
+                "https://plus.unsplash.com/premium_photo-1671599016130-7882dbff302f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cXVvdGVzfGVufDB8fDB8fHww",
+            ],
+            likes: 450,
+            views: 800,
+        },
+        {
+            id: 1,
+            images: [
+                "https://images.unsplash.com/photo-1723142483664-1568bd19eb2c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "https://images.unsplash.com/photo-1723395439527-20f1c97e035c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "https://plus.unsplash.com/premium_photo-1671599016130-7882dbff302f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cXVvdGVzfGVufDB8fDB8fHww",
+            ],
+            likes: 400,
+            views: 700,
+        },
+        {
+            id: 2,
+            images: [
+                "https://images.unsplash.com/photo-1723395439527-20f1c97e035c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            ],
+            likes: 350,
+            views: 600,
+        },
+        {
+            id: 3,
+            images: [
+                "https://plus.unsplash.com/premium_photo-1671599016130-7882dbff302f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cXVvdGVzfGVufDB8fDB8fHww",
+            ],
+            likes: 450,
+            views: 800,
+        },
     ];
 
     const [posts, setPosts] = useState(samplePosts);
@@ -67,16 +145,7 @@ const PostCard = () => {
         }
     };
 
-    const deletePost = async (postId) => {
-        try {
-            await fetch(`/api/posts/delete/${postId}`, {
-                method: "DELETE",
-            });
-            setPosts(posts.filter((post) => post.id !== postId));
-        } catch (error) {
-            console.error("Error deleting post:", error);
-        }
-    };
+
 
     const likePost = async (postId) => {
         try {
@@ -137,12 +206,7 @@ const PostCard = () => {
                                 <span>{post.views}</span>
                             </div>
                         </div>
-                        <button
-                            onClick={() => deletePost(post.id)}
-                            className="absolute top-2 right-2 p-2 bg-white bg-opacity-50 rounded-full"
-                        >
-                            <TrashIcon className="w-4 h-4 text-[#3A1B0F] fill-current " />
-                        </button>
+
                     </div>
                 ))}
             </div>

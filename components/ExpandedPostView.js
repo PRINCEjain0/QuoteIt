@@ -6,11 +6,14 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
     XMarkIcon,
+    TrashIcon
 } from "@heroicons/react/24/outline";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const NextArrow = ({ onClick, currentSlide, slideCount }) => {
+
+
     return (
         <button
             className={`absolute top-1/2 right-2 z-10 transform -translate-y-1/2 p-2 bg-white rounded-full shadow-lg ${currentSlide === slideCount - 1 ? "hidden" : ""
@@ -50,7 +53,7 @@ const ExpandedPostView = ({ post, onClose }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
-            <div className="relative w-full max-w-md h-auto  flex flex-col bg-white rounded-lg overflow-hidden">
+            <div className="relative w-full max-w-xl h-auto  flex flex-col bg-white rounded-lg overflow-hidden">
                 <button
                     onClick={onClose}
                     className="absolute top-2 right-2 z-20 p-1 bg-white bg-opacity-50 rounded-full"
@@ -83,6 +86,12 @@ const ExpandedPostView = ({ post, onClose }) => {
                                     {post.views}
                                 </span>
                             </div>
+                            <button
+
+                                className=" bg-white bg-opacity-50 rounded-full"
+                            >
+                                <TrashIcon className="w-4 h-4 text-[#3A1B0F] fill-current " />
+                            </button>
                         </div>
                     </div>
                     <div className="w-full sm:w-2/3 h-64 sm:h-full">
