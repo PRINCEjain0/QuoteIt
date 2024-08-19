@@ -1,14 +1,14 @@
 import { db } from './lib/db'
 import { compare } from "bcryptjs"
-import GoogleProvider from "next-auth/providers/google";
+import Google from "next-auth/providers/google";
 import CredentialProvider from "next-auth/providers/credentials";
 import { AuthError, CredentialsSignin } from 'next-auth';
 
 export default {
     providers: [
-        GoogleProvider({
-            AUTH_GOOGLE_ID: process.env.GOOGLE_CLIENT_ID,
-            AUTH_GOOGLE_SECRET: process.env.GOOGLE_CLIENT_SECRET
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
         }),
         CredentialProvider({
             name: "Credentials",
@@ -69,6 +69,10 @@ export default {
                     throw new AuthError("Error while creating user");
                 }
             }
+            if (account?.provider === "credentials") {
+                return true;
+            }
+
             return false;
 
         }

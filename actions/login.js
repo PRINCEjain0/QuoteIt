@@ -11,7 +11,7 @@ const loginHandler = async (FormData) => {
         // Redirect to home page after successful login
         // redirect('/');
     } catch (error) {
-        console.log(error);
+        // console.log(error);
 
         return error.cause;
     }
