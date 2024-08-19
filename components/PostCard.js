@@ -1,23 +1,17 @@
-import React, { useState } from "react";
-import Slider from "react-slick";
-import {
-    HeartIcon,
-    UserIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    XMarkIcon,
-} from "@heroicons/react/24/outline";
+// PostCard.js
+"use client";
+import React, { useState, useEffect } from "react";
+import { HeartIcon, UserIcon } from "@heroicons/react/24/outline";
+import ExpandedPostView from "./ExpandedPostView";
 import Stories from "./Stories";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const PostCard = () => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [expandedImage, setExpandedImage] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null);
-
-    const posts = [
+    const samplePosts = [
         {
+            id: 1,
             images: [
                 "https://images.unsplash.com/photo-1723142483664-1568bd19eb2c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 "https://images.unsplash.com/photo-1723395439527-20f1c97e035c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -28,45 +22,70 @@ const PostCard = () => {
             views: 700,
         },
         {
-            image:
+            id: 2,
+            images: [
                 "https://images.unsplash.com/photo-1723395439527-20f1c97e035c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            ],
             text: "Brilliant life",
-            likes: 400,
-            views: 700,
+            likes: 350,
+            views: 600,
         },
         {
-            image:
+            id: 3,
+            images: [
                 "https://plus.unsplash.com/premium_photo-1671599016130-7882dbff302f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cXVvdGVzfGVufDB8fDB8fHww",
+            ],
             text: "This is awesome",
-            likes: 400,
-            views: 700,
+            likes: 450,
+            views: 800,
         },
     ];
 
-    const NextArrow = ({ onClick, currentSlide, slideCount }) => {
-        return (
-            <button
-                className={`absolute top-1/2 right-2 z-10 transform -translate-y-1/2 p-2 bg-white rounded-full shadow-lg ${currentSlide === slideCount - 1 ? "hidden" : ""
-                    }`}
-                onClick={onClick}
-                aria-label="Next Slide"
-            >
-                <ChevronRightIcon className="w-6 h-6 text-black" />
-            </button>
-        );
+    const [posts, setPosts] = useState(samplePosts);
+    const [expandedPost, setExpandedPost] = useState(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch("/api/posts");
+            const data = await response.json();
+            setPosts(data);
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+        }
     };
 
-    const PrevArrow = ({ onClick, currentSlide }) => {
-        return (
-            <button
-                className={`absolute top-1/2 left-2 z-10 transform -translate-y-1/2 p-2 bg-white rounded-full shadow-lg ${currentSlide === 0 ? "hidden" : ""
-                    }`}
-                onClick={onClick}
-                aria-label="Previous Slide"
-            >
-                <ChevronLeftIcon className="w-6 h-6 text-black" />
-            </button>
-        );
+    const likePost = async (postId) => {
+        try {
+            const response = await fetch(`/api/posts/like/${postId}/like`, {
+                method: "POST",
+            });
+            const updatedPost = await response.json();
+            setPosts(posts.map((post) => (post.id === postId ? updatedPost : post)));
+        } catch (error) {
+            console.error("Error liking post:", error);
+        }
+    };
+
+    const incrementViews = async (postId) => {
+        try {
+            const response = await fetch(`/api/posts/view/${postId}/view`, {
+                method: "POST",
+            });
+            const updatedPost = await response.json();
+            setPosts(posts.map((post) => (post.id === postId ? updatedPost : post)));
+        } catch (error) {
+            console.error("Error incrementing views:", error);
+        }
+    };
+
+    const handleImageClick = (post) => {
+        setExpandedPost(post);
+        incrementViews(post.id);
     };
 
     const settings = {
@@ -75,9 +94,7 @@ const PostCard = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
-        adaptiveHeight: true,
+        adaptiveHeight: false, // Change this to false
         beforeChange: (current, next) => setCurrentSlide(next),
         responsive: [
             {
@@ -90,84 +107,53 @@ const PostCard = () => {
         ],
     };
 
-    const handleImageClick = (image) => {
-        if (expandedImage === image) {
-            setExpandedImage(null);
-            setSelectedImage(null);
-        } else {
-            setExpandedImage(image);
-            setSelectedImage(image);
-        }
-    };
-
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto">
                 <Stories />
-                {posts.map((post, index) => (
-                    <div key={index} className="mb-4">
-                        {post.images ? (
-                            <div className="relative">
-                                <Slider {...settings}>
+                <div className="grid grid-cols-1 gap-4">
+                    {posts.map((post) => (
+                        <div key={post.id} className="relative aspect-w-16 aspect-h-9">
+                            {post.images && post.images.length > 0 ? (
+                                <Slider {...settings} className="h-full">
                                     {post.images.map((image, imgIndex) => (
-                                        <div key={imgIndex} className="relative">
+                                        <div key={imgIndex} className="h-full">
                                             <img
                                                 src={image}
-                                                alt={`Slide ${imgIndex + 1}`}
-                                                className={`w-full h-full object-cover rounded-md shadow-md cursor-pointer `}
-                                                onClick={() => handleImageClick(image)}
+                                                alt={`Post ${post.id} - Image ${imgIndex + 1}`}
+                                                className="w-full h-full object-cover rounded-md shadow-md cursor-pointer"
+                                                onClick={() => handleImageClick(post)}
                                             />
                                         </div>
                                     ))}
                                 </Slider>
-                            </div>
-                        ) : (
-                            <img
-                                src={post.image}
-                                alt={post.text}
-                                className={`w-full h-full object-cover rounded-md shadow-md cursor-pointer `}
-                                onClick={() => handleImageClick(post.image)}
-                            />
-                        )}
-                        <div className="mt-2 px-4">
-                            <div className="flex justify-start items-center text-gray-600 text-sm">
-                                <div className="flex items-center">
-                                    <span className="mr-2">
-                                        <button className="p-2 rounded" aria-label="Like">
-                                            <HeartIcon className="w-6 h-6 text-[#3A1B0F] fill-current" />
-                                        </button>
-                                    </span>
-                                    <span>{post.likes}</span>
+                            ) : (
+                                <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-md shadow-md">
+                                    <span className="text-gray-500">No image available</span>
                                 </div>
+                            )}
+                            <div className="absolute bottom-2 left-2 flex items-center space-x-2 text-white text-sm bg-black bg-opacity-50 rounded-full px-3 py-1">
+                                <button
+                                    onClick={() => likePost(post.id)}
+                                    className="flex items-center"
+                                >
+                                    <HeartIcon className="w-4 h-4 text-[#3A1B0F] mr-1 fill-current" />
+                                    <span>{post.likes}</span>
+                                </button>
                                 <div className="flex items-center">
-                                    <span className="mr-2">
-                                        <button className="p-2 rounded" aria-label="Views">
-                                            <UserIcon className="w-6 h-6 text-[#3A1B0F] fill-current" />
-                                        </button>
-                                    </span>
+                                    <UserIcon className="w-4 h-4 text-[#3A1B0F] mr-1 fill-current" />
                                     <span>{post.views}</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
-            {expandedImage && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-                    <div className="relative max-w-3xl max-h-full">
-                        <img
-                            src={expandedImage}
-                            alt="Expanded view"
-                            className="max-w-full max-h-[90vh] object-contain"
-                        />
-                        <button
-                            onClick={() => setExpandedImage(null)}
-                            className="absolute top-4 right-4 p-2 bg-white rounded-full"
-                        >
-                            <XMarkIcon className="w-6 h-6 text-black" />
-                        </button>
-                    </div>
+                    ))}
                 </div>
+            </div>
+            {expandedPost && (
+                <ExpandedPostView
+                    post={expandedPost}
+                    onClose={() => setExpandedPost(null)}
+                />
             )}
         </div>
     );
