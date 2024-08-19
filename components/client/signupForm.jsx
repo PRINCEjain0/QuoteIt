@@ -55,9 +55,9 @@ const signupForm = ({ onSignupSuccess }) => {
                 </Card>
             </form >
             < form action={signInWithGoogle} >
-                <Button variant="outline" className="w-full" type="submit">
+                {/* <Button variant="outline" className="w-full" type="submit">
                     Sign In with Google
-                </Button>
+                </Button> */}
             </form >
         </>)
 }

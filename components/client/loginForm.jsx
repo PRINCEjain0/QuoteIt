@@ -53,9 +53,9 @@ const LoginForm = () => {
                 </CardContent>
                 <CardFooter className="flex flex-col space-y-2">
                     <Button className="w-full" type="submit">Log In</Button>
-                    <Button variant="outline" className="w-full" type="button" onClick={handleGoogleSignIn}>
+                    {/* <Button variant="outline" className="w-full" type="button" onClick={handleGoogleSignIn}>
                         Sign In with Google
-                    </Button>
+                    </Button> */}
                 </CardFooter>
             </Card>
         </form>
