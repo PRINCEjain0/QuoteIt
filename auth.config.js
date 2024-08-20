@@ -36,13 +36,28 @@ export default {
                     throw new CredentialsSignin({ cause: "Invalid email or password" });
                 }
 
-                return { id: user.id, email: user.email };
+                return { id: user.id, email: user.email, name: user.name };
             }
 
         })
 
     ],
     secret: process.env.secret,
+
+    callbacks: {
+        async session({ session, token }) {
+            session.user.id = token.id;
+            session.user.name = token.name;
+            return session;
+        },
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+                token.name = user.name;
+            }
+            return token;
+        },
+    },
 
     // callbacks: {
     //     signIn: async (user, account) => {

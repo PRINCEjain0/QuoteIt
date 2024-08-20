@@ -1,11 +1,15 @@
 "use client";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function AddPost() {
+    const { data: session } = useSession();
     const [showForm, setShowForm] = useState(false);
     const [text, setText] = useState("");
     const [bgImageUrl, setBgImageUrl] = useState("");
     const [font, setFont] = useState("Arial");
+    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
     function handleButtonClick() {
         setShowForm(true);
@@ -23,24 +27,45 @@ export default function AddPost() {
         setFont(event.target.value);
     }
 
-    function addPost() {
+    const addPost = async (e) => {
+        e.preventDefault();
+
         if (!text || !bgImageUrl) {
             alert("Please enter both text and background image URL.");
             return;
         }
 
-        console.log("Post Details:", {
-            text,
-            bgImageUrl,
-            font,
-        });
-        // the post creation logic here
+        setLoading(true);
 
-        setText("");
-        setBgImageUrl("");
-        setFont("Arial");
-        setShowForm(false);
-    }
+        try {
+            const res = await fetch('/api/post/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    text,
+                    bgImageUrl,
+                    userId: session?.user?.id,  // Using session to get the user ID
+                }),
+            });
+
+            if (res.ok) {
+                setMessage('Post created successfully!');
+                setText('');
+                setBgImageUrl('');
+                setFont('Arial');
+                setShowForm(false);
+            } else {
+                const errorData = await res.json();
+                setMessage(`Error: ${errorData.error}`);
+            }
+        } catch (error) {
+            setMessage('An unexpected error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="flex flex-col items-center ">
@@ -94,9 +119,11 @@ export default function AddPost() {
                     <button
                         className="bg-blue-500 py-2 px-12 rounded-md text-white mb-2"
                         onClick={addPost}
+                        disabled={loading}
                     >
-                        Upload Post
+                        {loading ? 'Uploading...' : 'Upload Post'}
                     </button>
+                    {message && <p className="mt-4 text-red-500">{message}</p>}
                 </div>
             )}
         </div>
