@@ -1,8 +1,18 @@
-import { db } from '../../../../lib/db';
+import { db } from '../../../../../lib/db';
 
-export async function GET() {
+export async function GET({ params }) {
+
+
+
+    console.log("newuser" + params)
+    const userId = params.userId;
     try {
+
         const posts = await db.post.findMany({
+            where: {
+                userId,
+            },
+
             orderBy: {
                 createdAt: 'desc'
             },

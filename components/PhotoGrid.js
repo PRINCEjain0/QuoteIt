@@ -3,18 +3,28 @@
 import React, { useState, useEffect } from "react";
 import { HeartIcon, UserIcon } from "@heroicons/react/24/outline";
 import ExpandedPostView from "./ExpandedPostView";
+import { useSession } from "next-auth/react";
+
 
 const PostCard = () => {
     const [posts, setPosts] = useState([]);
     const [expandedPost, setExpandedPost] = useState(null);
+    const { data: session } = useSession();
+    const userId = session?.user?.id;
+    console.log("he " + userId)
+
+
 
     useEffect(() => {
+        // if (session?.user?.id) {
         fetchPosts();
+        // }
+
     }, []);
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch('/api/post/read');
+            const response = await fetch(`/api/post/read/${userId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch posts');
             }
