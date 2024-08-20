@@ -44,39 +44,39 @@ export default {
     ],
     secret: process.env.secret,
 
-    callbacks: {
-        signIn: async (user, account) => {
+    // callbacks: {
+    //     signIn: async (user, account) => {
 
-            if (account?.provider === "google") {
-                try {
-                    const { email, name, image, id } = user;
-                    const alreadyUser = await db.user.findUnique({
-                        where: { email },
+    //         if (account?.provider === "google") {
+    //             try {
+    //                 const { email, name, image, id } = user;
+    //                 const alreadyUser = await db.user.findUnique({
+    //                     where: { email },
 
-                    });
-                    console.log("Sign-in attempt:", { user, account });
+    //                 });
+    //                 console.log("Sign-in attempt:", { user, account });
 
-                    if (!alreadyUser) await db.user.create({
-                        data: {
-                            name,
-                            email,
-                            image,
-                            googleId: id
-                        },
-                    });
-                    return true;
+    //                 if (!alreadyUser) await db.user.create({
+    //                     data: {
+    //                         name,
+    //                         email,
+    //                         image,
+    //                         googleId: id
+    //                     },
+    //                 });
+    //                 return true;
 
 
-                } catch (error) {
-                    throw new AuthError("Error while creating user");
-                }
-            }
-            if (account?.provider === "credentials") {
-                return true;
-            }
+    //             } catch (error) {
+    //                 throw new AuthError("Error while creating user");
+    //             }
+    //         }
+    //         if (account?.provider === "credentials") {
+    //             return true;
+    //         }
 
-            return false;
+    //         return false;
 
-        }
-    }
+    //     }
+    // }
 }
