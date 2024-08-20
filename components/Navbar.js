@@ -35,7 +35,7 @@ const Navbar = () => {
             </div>
             <div className="flex items-center space-x-4">
                 {status === "loading" ? (
-                    <p>Loading...</p>
+                    <p></p>
                 ) : status === "authenticated" ? (
                     <>
                         <p>Welcome, {session.user.name || session.user.email}</p>

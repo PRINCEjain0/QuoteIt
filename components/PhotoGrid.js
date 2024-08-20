@@ -121,11 +121,11 @@ const PostCard = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch("/api/posts");
+            const response = await fetch(`/api/post/read/${postId}`);
             const data = await response.json();
             setPosts(data);
         } catch (error) {
-            console.error("Error fetching posts:", error);
+            // console.error("Error fetching posts:", error);
         }
     };
 
