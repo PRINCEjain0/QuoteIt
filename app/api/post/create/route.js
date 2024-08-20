@@ -1,12 +1,6 @@
 import { db } from '../../../../lib/db';
 
-
-
 export async function POST(req) {
-
-
-
-
     const { text: description, bgImageUrl: imageUrl, userId: userId } = await req.json();
 
     if (!description || !imageUrl) {
@@ -22,7 +16,18 @@ export async function POST(req) {
             },
         });
 
-        return new Response(JSON.stringify(newPost), { status: 201 });
+        // Create a response object with both the new post data and a success message
+        const responseData = {
+            post: newPost,
+            message: 'Post successfully created!'
+        };
+        console.log('Raw server response:', responseData);
+
+        return new Response(JSON.stringify(responseData), {
+            status: 201,
+            headers: { 'Content-Type': 'application/json' }
+        });
+
     } catch (error) {
         console.error('Error creating post:', error);
         return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500 });

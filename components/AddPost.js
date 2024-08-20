@@ -51,11 +51,15 @@ export default function AddPost() {
             });
 
             if (res.ok) {
-                setMessage('Post created successfully!');
+                const data = await res.json();
+                console.log('Post created successfully:', data.post);
+                console.log('Server message:', data.message);
+                setMessage(data.message || 'Post created successfully!');
                 setText('');
                 setBgImageUrl('');
                 setFont('Arial');
                 setShowForm(false);
+
             } else {
                 const errorData = await res.json();
                 setMessage(`Error: ${errorData.error}`);
@@ -123,9 +127,9 @@ export default function AddPost() {
                     >
                         {loading ? 'Uploading...' : 'Upload Post'}
                     </button>
-                    {message && <p className="mt-4 text-red-500">{message}</p>}
                 </div>
             )}
+            {message && <p className={`mt-4 ${message.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>{message}</p>}
         </div>
     );
 }
