@@ -50,6 +50,7 @@ const ExpandedPostView = ({ post, onClose }) => {
         prevArrow: <PrevArrow />,
         adaptiveHeight: true,
     };
+    const images = Array.isArray(post.images) ? post.images : [post.img];
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
@@ -96,15 +97,12 @@ const ExpandedPostView = ({ post, onClose }) => {
                     </div>
                     <div className="w-full sm:w-2/3 h-64 sm:h-full">
                         <Slider {...settings} className="w-full h-full">
-                            {post.images.map((image, imgIndex) => (
-                                <div
-                                    key={imgIndex}
-                                    className="flex items-center justify-center h-full"
-                                >
+                            {images.map((img, index) => (
+                                <div key={index} className="flex items-center justify-center h-full">
                                     <img
-                                        src={image}
-                                        alt={`Slide ${imgIndex + 1}`}
-                                        className="w-full h-full object-contain"
+                                        src={img}
+                                        alt={`Post ${post.id} - Image ${index + 1}`}
+                                        className="max-w-full max-h-full object-contain"
                                     />
                                 </div>
                             ))}
