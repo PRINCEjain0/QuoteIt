@@ -51,17 +51,17 @@ const PostCard = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch("/api/posts");
+            const response = await fetch(`/api/post/read/${postId}`);
             const data = await response.json();
             setPosts(data);
         } catch (error) {
-            console.error("Error fetching posts:", error);
+            // console.error("Error fetching posts:", error);
         }
     };
 
     const likePost = async (postId) => {
         try {
-            const response = await fetch(`/api/posts/like/${postId}/like`, {
+            const response = await fetch(`/api/posts/like/${postId}`, {
                 method: "POST",
             });
             const updatedPost = await response.json();
@@ -73,7 +73,7 @@ const PostCard = () => {
 
     const incrementViews = async (postId) => {
         try {
-            const response = await fetch(`/api/posts/view/${postId}/view`, {
+            const response = await fetch(`/api/posts/view/${postId}`, {
                 method: "POST",
             });
             const updatedPost = await response.json();
