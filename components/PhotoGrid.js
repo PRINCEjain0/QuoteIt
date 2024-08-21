@@ -1,32 +1,21 @@
-// PostCard.js
 "use client";
 import React, { useState, useEffect } from "react";
 import { HeartIcon, UserIcon } from "@heroicons/react/24/outline";
 import ExpandedPostView from "./ExpandedPostView";
-import { useSession } from "next-auth/react";
-
 
 const PostCard = () => {
     const [posts, setPosts] = useState([]);
     const [expandedPost, setExpandedPost] = useState(null);
-    const { data: session } = useSession();
-    const userId = session?.user?.id;
-    console.log("he " + userId)
-
-
 
     useEffect(() => {
-        // if (session?.user?.id) {
         fetchPosts();
-        // }
-
     }, []);
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch(`/api/post/read/${userId}`);
+            const response = await fetch('/api/post/read/');
             if (!response.ok) {
-                throw new Error('Failed to fetch posts');
+                throw new Error("Failed to fetch posts");
             }
             const data = await response.json();
             setPosts(data);
@@ -44,7 +33,10 @@ const PostCard = () => {
     };
 
     const handleImageClick = (post) => {
-        setExpandedPost(post);
+        setExpandedPost({
+            ...post,
+            images: post.images.map((image) => image.imageUrl)
+        });
         incrementViews(post.id);
     };
 
@@ -52,16 +44,35 @@ const PostCard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {posts.map((post) => (
-                    <div key={post.id} className="relative">
-                        <img
-                            src={post.img}
-                            alt={`Post ${post.id}`}
-                            className="w-full h-64 object-cover rounded-md shadow-md cursor-pointer"
-                            onClick={() => handleImageClick(post)}
-                        />
+                    <div
+                        key={post.id}
+                        className="relative cursor-pointer"
+                        onClick={() => handleImageClick(post)}
+                    >
+                        <div className="w-full h-64 object-cover rounded-md shadow-md relative">
+                            {post.images && post.images.length > 0 ? (
+                                <img
+                                    src={post.images[0].imageUrl}
+                                    alt={`Post ${post.id} Image 1`}
+                                    className="w-full h-full object-cover rounded-md"
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center">
+                                    <span className="text-gray-500 font-bold text-lg">
+                                        No Image
+                                    </span>
+                                </div>
+                            )}
+                            <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md text-[#3A1B0F] font-bold text-lg px-4 line-clamp-2">
+                                {post.images && post.images.length > 0 ? post.images[0].desc : ""}
+                            </div>
+                        </div>
                         <div className="absolute bottom-2 left-2 flex items-center space-x-2 text-white text-sm bg-black bg-opacity-50 rounded-full px-3 py-1">
                             <button
-                                onClick={() => likePost(post.id)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    likePost(post.id);
+                                }}
                                 className="flex items-center"
                             >
                                 <HeartIcon className="w-4 h-4 text-[#3A1B0F] mr-1 fill-current" />
@@ -77,7 +88,10 @@ const PostCard = () => {
             </div>
             {expandedPost && (
                 <ExpandedPostView
-                    post={expandedPost}
+                    post={{
+                        ...expandedPost,
+
+                    }}
                     onClose={() => setExpandedPost(null)}
                 />
             )}

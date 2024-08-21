@@ -1,22 +1,34 @@
 import { db } from '../../../../lib/db';
 
 export async function POST(req) {
-    const { text: description, bgImageUrl: imageUrl, userId: userId } = await req.json();
-
-    if (!description || !imageUrl) {
-        return new Response(JSON.stringify({ error: 'Description and image URL are required' }), { status: 400 });
-    }
-
     try {
+        // Parse the incoming JSON data
+        const { postItems, userId } = await req.json();
+
+        // Validate input
+        if (!Array.isArray(postItems) || !userId) {
+            return new Response(JSON.stringify({ error: 'Invalid input' }), { status: 400 });
+        }
+
+        // Create a new post
         const newPost = await db.post.create({
             data: {
-                desc: description,
-                img: imageUrl,
-                userId: userId
+                userId: userId,
+                // Create the post with an empty description, you can add this if needed
+
+                images: {
+                    create: postItems.map(item => ({
+                        imageUrl: item.bgImageUrl,
+                        desc: item.text,
+                    }))
+                }
             },
+            include: {
+                images: true // Include images in the response if needed
+            }
         });
 
-        // Create a response object with both the new post data and a success message
+        // Prepare the response data
         const responseData = {
             post: newPost,
             message: 'Post successfully created!'

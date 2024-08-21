@@ -51,13 +51,19 @@ model Account {
 
 model Post {
   id        Int      @id @default(autoincrement())
-  desc      String
-  img       String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  likes     Like[]
+  user      User     @relation(fields: [userId], references: [id])
+  images    Image[]
+  createdAt DateTime @default(now())
+  Like      Like[]
+}
+
+model Image {
+  id       Int    @id @default(autoincrement())
+  desc     String
+  imageUrl String
+  postId   Int
+  post     Post   @relation(fields: [postId], references: [id])
 }
 
 model Like {
