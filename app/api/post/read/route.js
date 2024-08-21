@@ -1,10 +1,10 @@
 import { db } from '../../../../lib/db';
 import { auth } from "@/auth"
 
-export async function GET({ params }) {
-    const session = await auth();
-    const userId = session?.user?.id; // Access the user ID from the session object
 
+export async function GET(req) {
+    const session = await auth();
+    const userId = session?.user?.id;
     try {
         const posts = await db.post.findMany({
             where: {

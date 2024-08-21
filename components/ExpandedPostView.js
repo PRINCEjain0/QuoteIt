@@ -58,6 +58,7 @@ const ExpandedPostView = ({ post, onClose }) => {
     // console.log(images);
 
     return (
+
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
             <div className="relative w-full max-w-md h-auto flex bg-white rounded-lg overflow-hidden">
                 <button
@@ -106,13 +107,19 @@ const ExpandedPostView = ({ post, onClose }) => {
                                     <img
                                         src={img.imageUrl}
                                         alt={`Post ${post.id} - Image ${index + 1}`}
-                                        className="max-w-full max-h-full object-contain"
+                                        className="max-w-full max-h-full object-contain "
                                     />
 
-                                    <div key={index} className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md text-[#3A1B0F] font-bold text-lg px-4 line-clamp-2">
-                                        {img.desc}
-                                    </div>
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <span
+                                            className="bg-opacity-75 rounded-md text-white font-bold text-lg px-4 line-clamp-2 "
 
+                                            style={{ backgroundColor: 'rgba(255, 173, 176, 0.8)' }}
+
+                                        >
+                                            {img.desc}
+                                        </span>
+                                    </div>
                                 </div>
                             ))}
                         </Slider>

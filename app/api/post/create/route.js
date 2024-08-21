@@ -14,7 +14,6 @@ export async function POST(req) {
         const newPost = await db.post.create({
             data: {
                 userId: userId,
-                // Create the post with an empty description, you can add this if needed
 
                 images: {
                     create: postItems.map(item => ({

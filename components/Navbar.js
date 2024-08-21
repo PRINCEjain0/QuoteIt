@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -21,6 +22,8 @@ const Navbar = () => {
         await signOut({ redirect: false });
         // router.push("/signin");
     };
+
+
 
     return (
         <nav className="flex items-center justify-between p-4">

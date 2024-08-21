@@ -63,7 +63,8 @@ const PostCard = () => {
                                     </span>
                                 </div>
                             )}
-                            <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md text-[#3A1B0F] font-bold text-lg px-4 line-clamp-2">
+                            <div
+                                className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md text-white font-bold text-lg px-4 line-clamp-2">
                                 {post.images && post.images.length > 0 ? post.images[0].desc : ""}
                             </div>
                         </div>
