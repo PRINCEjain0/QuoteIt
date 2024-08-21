@@ -53,9 +53,9 @@ const ExpandedPostView = ({ post, onClose }) => {
         adaptiveHeight: true,
         className: "overflow-hidden"
     };
-    const images = Array.isArray(post.images) ? post.images : [post.img];
-    const desc = Array.isArray(post.desc) ? post.desc : [post.desc];
-    console.log(images);
+    // const images = Array.isArray(post.images) ? post.images : [post.img];
+    // const desc = Array.isArray(post.desc) ? post.desc : [post.desc];
+    // console.log(images);
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
@@ -101,18 +101,18 @@ const ExpandedPostView = ({ post, onClose }) => {
                     </div>
                     <div className="w-2/3 h-full">
                         <Slider {...settings} className="w-full h-full">
-                            {images.map((img, index) => (
+                            {post.images.map((img, index) => (
                                 <div key={index} className="relative h-full">
                                     <img
-                                        src={img}
+                                        src={img.imageUrl}
                                         alt={`Post ${post.id} - Image ${index + 1}`}
                                         className="max-w-full max-h-full object-contain"
                                     />
-                                    {desc.map((desc) => (
-                                        <div key={index} className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md text-[#3A1B0F] font-bold text-lg px-4 line-clamp-2">
-                                            {desc}
-                                        </div>
-                                    ))}
+
+                                    <div key={index} className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md text-[#3A1B0F] font-bold text-lg px-4 line-clamp-2">
+                                        {img.desc}
+                                    </div>
+
                                 </div>
                             ))}
                         </Slider>

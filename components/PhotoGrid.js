@@ -35,8 +35,7 @@ const PostCard = () => {
     const handleImageClick = (post) => {
         setExpandedPost({
             ...post,
-            images: post.images.map((image) => image.imageUrl),
-            desc: post.images.map((image) => image.desc)
+            images: post.images
         });
         incrementViews(post.id);
     };
