@@ -41,7 +41,6 @@ const PrevArrow = ({ onClick, currentSlide }) => {
 
 const ExpandedPostView = ({ post, onClose }) => {
     const { data: session } = useSession();
-    console.log(post);
     const settings = {
         dots: true,
         infinite: false,
@@ -53,12 +52,27 @@ const ExpandedPostView = ({ post, onClose }) => {
         adaptiveHeight: true,
         className: "overflow-hidden"
     };
-    // const images = Array.isArray(post.images) ? post.images : [post.img];
-    // const desc = Array.isArray(post.desc) ? post.desc : [post.desc];
-    // console.log(images);
+
+    const formatText = (text) => {
+        return text
+            .split("\n")
+            .filter(line => line.trim() !== "") // Filter out lines that are just white space
+            .map((line, index) => (
+                <span
+                    key={index}
+                    className="block mb-2" // Add margin-bottom for spacing between lines
+                    style={{
+                        backgroundColor: 'rgba(255, 173, 176, 0.8)',
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                    }}
+                >
+                    {line}
+                </span>
+            ));
+    };
 
     return (
-
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
             <div className="relative w-full max-w-md h-auto flex bg-white rounded-lg overflow-hidden">
                 <button
@@ -110,15 +124,8 @@ const ExpandedPostView = ({ post, onClose }) => {
                                         className="max-w-full max-h-full object-contain "
                                     />
 
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <span
-                                            className="bg-opacity-75 rounded-md text-white font-bold text-lg px-4 line-clamp-2 "
-
-                                            style={{ backgroundColor: 'rgba(255, 173, 176, 0.8)' }}
-
-                                        >
-                                            {img.desc}
-                                        </span>
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                        {formatText(img.desc)}
                                     </div>
                                 </div>
                             ))}
