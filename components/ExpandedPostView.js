@@ -56,11 +56,11 @@ const ExpandedPostView = ({ post, onClose }) => {
     const formatText = (text) => {
         return text
             .split("\n")
-            .filter(line => line.trim() !== "") // Filter out lines that are just white space
+            .filter(line => line.trim() !== "")
             .map((line, index) => (
                 <span
                     key={index}
-                    className="block mb-2" // Add margin-bottom for spacing between lines
+                    className="block mb-2"
                     style={{
                         backgroundColor: 'rgba(255, 173, 176, 0.8)',
                         padding: '4px 8px',
