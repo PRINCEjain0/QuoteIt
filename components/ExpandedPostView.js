@@ -54,6 +54,7 @@ const ExpandedPostView = ({ post, onClose }) => {
         className: "overflow-hidden"
     };
     const images = Array.isArray(post.images) ? post.images : [post.img];
+    const desc = Array.isArray(post.desc) ? post.desc : [post.desc];
     console.log(images);
 
     return (
@@ -75,7 +76,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                                 </span>
                             </div>
                             <div className="w-full p-2 overflow-y-auto">
-                                {post.desc}
+                                {/* {post.desc} */}
                             </div>
                         </div>
                         <div className="flex items-center space-x-4">
@@ -107,9 +108,11 @@ const ExpandedPostView = ({ post, onClose }) => {
                                         alt={`Post ${post.id} - Image ${index + 1}`}
                                         className="max-w-full max-h-full object-contain"
                                     />
-                                    <div className="absolute inset-0 flex items-center justify-center  rounded-md text-white font-bold text-lg px-4 line-clamp-2">
-                                        {post.desc}
-                                    </div>
+                                    {desc.map((desc) => (
+                                        <div key={index} className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md text-[#3A1B0F] font-bold text-lg px-4 line-clamp-2">
+                                            {desc}
+                                        </div>
+                                    ))}
                                 </div>
                             ))}
                         </Slider>
