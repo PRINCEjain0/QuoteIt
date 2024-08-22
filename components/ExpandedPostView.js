@@ -46,7 +46,7 @@ const ExpandedPostView = ({ post, onClose }) => {
     // State hooks for customization
     const [bgColor, setBgColor] = useState("#d1ff9f");
     const [bgOpacity, setBgOpacity] = useState(1);
-    const [padding, setPadding] = useState("0.2em");
+    const [padding, setPadding] = useState("0.7em");
 
     const settings = {
         dots: true,
@@ -88,22 +88,22 @@ const ExpandedPostView = ({ post, onClose }) => {
     };
 
     const styles = `
-        .goo-container {
-            // padding: 10px;
-        }
-        .goo {
-            font-size: 1rem;
-            line-height: 1.6;
-            display: inline; 
-            box-decoration-break: clone;
-            -webkit-box-decoration-break: clone;
-            filter: url('#goo');
-            // border-radius: 3em; // Added border-radius for smoother corners
-        }
-        .goo:focus {
-            outline: 0;
-        }
-    `;
+    .goo-container {
+      // padding: 10px;
+    }
+    .goo {
+      font-size: 1rem;
+      line-height: 1.8;
+      display: inline; 
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+      filter: url('#goo');
+     
+    }
+    .goo:focus {
+      outline: 0;
+    }
+  `;
     const StyleTag = () => (
         <style dangerouslySetInnerHTML={{ __html: styles }} />
     );
