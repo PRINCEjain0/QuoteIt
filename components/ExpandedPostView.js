@@ -62,60 +62,63 @@ const ExpandedPostView = ({ post, onClose }) => {
     const formatText = (text) => {
         return (
             <>
-                <svg style={{ display: 'none' }}>
+                <svg style={{ visibility: 'hidden', position: 'absolute' }} width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
                     <defs>
-                        <filter id="gooey-filter">
-                            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="7.5" />
-                            <feColorMatrix in="blur" result="colormatrix"
-                                type="matrix"
-                                values="1 0 0 0 0
-                                0 1 0 0 0
-                                0 0 1 0 0
-                                0 0 0 58 -9" />
-                            <feBlend in="SourceGraphic" in2="colormatrix" />
+                        <filter id="goo">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+                            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
                         </filter>
                     </defs>
                 </svg>
-                <div className="gooey-text-container">
-                    <p style={{
-                        backgroundColor: `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, ${bgOpacity})`,
-                        padding: padding
-                    }}>
+                <div className="goo-container">
+                    <div
+                        className="goo"
+                        style={{
+                            backgroundColor: `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, ${bgOpacity})`,
+                            padding: padding
+                        }}
+                        contentEditable="true"
+                    >
                         {text}
-                    </p>
+                    </div>
                 </div>
             </>
         );
     };
 
-
     const styles = `
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
-    .gooey-text-container {
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        line-height: 1.6;
-        padding: 0.5em;
-    }
-
-    .gooey-text-container p {
-        display: inline;
-        box-decoration-break: clone;
-        -webkit-box-decoration-break: clone;
-        border-radius: 0rem;
-        // box-shadow: 
-        //     0.3em 0 0 ${bgColor},
-        //     -0.3em 0 0 ${bgColor};
-        filter: url('#gooey-filter');
-    }
-
-    .gooey-text-container p::before,
-    .gooey-text-container p::after {
-        content: "";
-        display: inline-block;
-        width: 0.4em;
-    }
-    `;
+            :root {
+                // --color-bg: #34304c;
+                // --color-bg2: #534d7a;
+                // --color-highlight: #fff;
+                // --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            }
+            .goo-container {
+                padding: 7.5vh 10px 0 10px;
+                font-family: var(--font);
+                background: var(--color-bg);
+            }
+            .goo {
+                font-size: 1.2rem;
+                line-height: 1.5;
+                display: inline;
+                box-decoration-break: clone;
+                filter: url('#goo');
+            }
+            .goo:focus {
+                outline: 0;
+            }
+            .edit {
+                display: inline-block;
+                padding: 0.5rem 1rem;
+                background: var(--color-bg2);
+                text-transform: uppercase;
+                font-size: 0.7rem;
+                color: var(--color-highlight);
+                border-radius: 1em;
+            }
+        `;
 
     const StyleTag = () => (
         <style dangerouslySetInnerHTML={{ __html: styles }} />
