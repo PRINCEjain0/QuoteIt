@@ -75,7 +75,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                     <div
                         className="goo"
                         style={{
-                            backgroundColor: `rgba(${parseInt(bgColor.slice(1, 3), 16)}, ${parseInt(bgColor.slice(3, 5), 16)}, ${parseInt(bgColor.slice(5, 7), 16)}, ${bgOpacity})`,
+                            backgroundColor: bgColor,
                             padding: padding
                         }}
                         contentEditable="true"
@@ -88,38 +88,22 @@ const ExpandedPostView = ({ post, onClose }) => {
     };
 
     const styles = `
-            :root {
-                // --color-bg: #34304c;
-                // --color-bg2: #534d7a;
-                // --color-highlight: #fff;
-                // --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-            }
-            .goo-container {
-                padding: 7.5vh 10px 0 10px;
-                font-family: var(--font);
-                background: var(--color-bg);
-            }
-            .goo {
-                font-size: 1.2rem;
-                line-height: 1.5;
-                display: inline;
-                box-decoration-break: clone;
-                filter: url('#goo');
-            }
-            .goo:focus {
-                outline: 0;
-            }
-            .edit {
-                display: inline-block;
-                padding: 0.5rem 1rem;
-                background: var(--color-bg2);
-                text-transform: uppercase;
-                font-size: 0.7rem;
-                color: var(--color-highlight);
-                border-radius: 1em;
-            }
-        `;
-
+        .goo-container {
+            // padding: 10px;
+        }
+        .goo {
+            font-size: 1rem;
+            line-height: 1.6;
+            display: inline; 
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+            filter: url('#goo');
+            // border-radius: 3em; // Added border-radius for smoother corners
+        }
+        .goo:focus {
+            outline: 0;
+        }
+    `;
     const StyleTag = () => (
         <style dangerouslySetInnerHTML={{ __html: styles }} />
     );
@@ -204,10 +188,9 @@ const ExpandedPostView = ({ post, onClose }) => {
                                     <img
                                         src={img.imageUrl}
                                         alt={`Post ${post.id} - Image ${index + 1}`}
-                                        className="max-w-full max-h-full object-contain "
+                                        className="max-w-full max-h-full object-contain"
                                     />
-
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center ">
                                         {formatText(img.desc)}
                                     </div>
                                 </div>
