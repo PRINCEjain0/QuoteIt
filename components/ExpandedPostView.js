@@ -40,36 +40,16 @@ const PrevArrow = ({ onClick, currentSlide }) => {
     );
 };
 
-// Modal component for showing full text
-const TextModal = ({ text, onClose }) => {
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
-            <div className="relative bg-white rounded-lg p-6 w-full max-w-lg">
-                <button
-                    onClick={onClose}
-                    className="absolute top-2 right-2 z-20 p-1 bg-white bg-opacity-50 rounded-full"
-                >
-                    <XMarkIcon className="w-4 h-4 sm:w-6 sm:h-6 text-black" />
-                </button>
-                <div className="overflow-y-auto max-h-96">
-                    <p className="text-base text-gray-800">{text}</p>
-                </div>
-            </div>
-        </div>
-    );
-};
+
 
 const ExpandedPostView = ({ post, onClose }) => {
     const { data: session } = useSession();
 
-    // State hooks for customization
-    const [bgColor, setBgColor] = useState("#d1ff9f");
-    const [bgOpacity, setBgOpacity] = useState(1);
+    const [bgColor, setBgColor] = useState("#C0C0C0");
+    const [bgOpacity, setBgOpacity] = useState(0.5);
     const [padding, setPadding] = useState("0.7em");
 
-    // State hook for modal
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedText, setSelectedText] = useState("");
+
 
     const settings = {
         dots: true,
@@ -83,60 +63,37 @@ const ExpandedPostView = ({ post, onClose }) => {
         className: "overflow-hidden"
     };
 
-    const handleEllipsisClick = (text) => {
-        setSelectedText(text);
-        setIsModalOpen(true);
-    };
-
-
-
-
-
     const formatText = (text) => {
-        const truncatedText = text.length > 300 ? text.substring(0, 300) + "..." : text;
         return (
-            <>
-                <svg style={{ visibility: 'hidden', position: 'absolute' }} width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                    <defs>
-                        <filter id="goo">
-                            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
-                            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-                        </filter>
-                    </defs>
-                </svg>
-                <div className="goo-container">
-                    <div
-                        className="goo"
-                        style={{
-                            backgroundColor: bgColor,
-                            padding: padding,
-                            opacity: bgOpacity
-                        }}
-                        contentEditable="true"
-                    >
-                        {truncatedText}
-                        {text.length > 300 && (
-                            <button
-                                onClick={() => handleEllipsisClick(text)}
-                                className="text-blue-500 underline ml-2"
-                            >
-                                Read More
-                            </button>
-                        )}
-                    </div>
-                </div>
-            </>
+            <div
+                className="inline-block"
+                style={{
+                    padding: padding,
+                    textAlign: "center",
+                }}
+            >
+                <span
+                    className="goo"
+                    style={{
+                        backgroundColor: `${bgColor}${Math.round(bgOpacity * 255).toString(16).padStart(2, '0')}`,
+                        color: "#000000",
+                        padding: "0.1em 1em",
+                        borderRadius: "0.5em",
+                        boxDecorationBreak: "clone",
+                        WebkitBoxDecorationBreak: "clone",
+                    }}
+                >
+                    {text}
+                </span>
+            </div>
         );
     };
 
     const styles = `
-    .goo-container {
-      // padding: 10px;
-    }
-    .goo {
+   
+   .goo {
       font-size: 1rem;
-      line-height: 1.8;
+      line-height: 1.3;
       display: inline; 
       box-decoration-break: clone;
       -webkit-box-decoration-break: clone;
@@ -241,8 +198,6 @@ const ExpandedPostView = ({ post, onClose }) => {
                     </div>
                 </div>
             </div>
-            {/* Render the TextModal only when needed */}
-            {isModalOpen && <TextModal text={selectedText} onClose={() => setIsModalOpen(false)} />}
         </div>
     );
 };
