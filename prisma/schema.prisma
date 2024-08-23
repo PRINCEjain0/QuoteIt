@@ -60,7 +60,7 @@ model Post {
 
 model Image {
   id       Int    @id @default(autoincrement())
-  desc     String
+  desc     String @db.Text
   imageUrl String
   postId   Int
   post     Post   @relation(fields: [postId], references: [id])

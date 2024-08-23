@@ -40,6 +40,25 @@ const PrevArrow = ({ onClick, currentSlide }) => {
     );
 };
 
+// Modal component for showing full text
+const TextModal = ({ text, onClose }) => {
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
+            <div className="relative bg-white rounded-lg p-6 w-full max-w-lg">
+                <button
+                    onClick={onClose}
+                    className="absolute top-2 right-2 z-20 p-1 bg-white bg-opacity-50 rounded-full"
+                >
+                    <XMarkIcon className="w-4 h-4 sm:w-6 sm:h-6 text-black" />
+                </button>
+                <div className="overflow-y-auto max-h-96">
+                    <p className="text-base text-gray-800">{text}</p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const ExpandedPostView = ({ post, onClose }) => {
     const { data: session } = useSession();
 
@@ -47,6 +66,10 @@ const ExpandedPostView = ({ post, onClose }) => {
     const [bgColor, setBgColor] = useState("#d1ff9f");
     const [bgOpacity, setBgOpacity] = useState(1);
     const [padding, setPadding] = useState("0.7em");
+
+    // State hook for modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedText, setSelectedText] = useState("");
 
     const settings = {
         dots: true,
@@ -59,7 +82,18 @@ const ExpandedPostView = ({ post, onClose }) => {
         adaptiveHeight: true,
         className: "overflow-hidden"
     };
+
+    const handleEllipsisClick = (text) => {
+        setSelectedText(text);
+        setIsModalOpen(true);
+    };
+
+
+
+
+
     const formatText = (text) => {
+        const truncatedText = text.length > 300 ? text.substring(0, 300) + "..." : text;
         return (
             <>
                 <svg style={{ visibility: 'hidden', position: 'absolute' }} width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -76,11 +110,20 @@ const ExpandedPostView = ({ post, onClose }) => {
                         className="goo"
                         style={{
                             backgroundColor: bgColor,
-                            padding: padding
+                            padding: padding,
+                            opacity: bgOpacity
                         }}
                         contentEditable="true"
                     >
-                        {text}
+                        {truncatedText}
+                        {text.length > 300 && (
+                            <button
+                                onClick={() => handleEllipsisClick(text)}
+                                className="text-blue-500 underline ml-2"
+                            >
+                                Read More
+                            </button>
+                        )}
                     </div>
                 </div>
             </>
@@ -98,7 +141,6 @@ const ExpandedPostView = ({ post, onClose }) => {
       box-decoration-break: clone;
       -webkit-box-decoration-break: clone;
       filter: url('#goo');
-     
     }
     .goo:focus {
       outline: 0;
@@ -190,7 +232,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                                         alt={`Post ${post.id} - Image ${index + 1}`}
                                         className="max-w-full max-h-full object-contain"
                                     />
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center ">
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
                                         {formatText(img.desc)}
                                     </div>
                                 </div>
@@ -199,6 +241,8 @@ const ExpandedPostView = ({ post, onClose }) => {
                     </div>
                 </div>
             </div>
+            {/* Render the TextModal only when needed */}
+            {isModalOpen && <TextModal text={selectedText} onClose={() => setIsModalOpen(false)} />}
         </div>
     );
 };
