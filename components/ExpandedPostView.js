@@ -48,6 +48,7 @@ const ExpandedPostView = ({ post, onClose }) => {
     const [bgColor, setBgColor] = useState("#C0C0C0");
     const [bgOpacity, setBgOpacity] = useState(0.5);
     const [padding, setPadding] = useState("0.7em");
+    const [font, setFont] = useState("#000000")
 
 
 
@@ -68,6 +69,7 @@ const ExpandedPostView = ({ post, onClose }) => {
             <div
                 className="inline-block"
                 style={{
+                    color: font,
                     padding: padding,
                     textAlign: "center",
                 }}
@@ -76,7 +78,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                     className="goo"
                     style={{
                         backgroundColor: `${bgColor}${Math.round(bgOpacity * 255).toString(16).padStart(2, '0')}`,
-                        color: "#000000",
+                        // color: "#000000",
                         padding: "0.1em 1em",
                         borderRadius: "0.5em",
                         boxDecorationBreak: "clone",
@@ -147,6 +149,15 @@ const ExpandedPostView = ({ post, onClose }) => {
                                         value={bgOpacity}
                                         onChange={(e) => setBgOpacity(e.target.value)}
                                         className="mt-1 block w-full"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-sm font-medium text-gray-700">Font Colour</label>
+                                    <input
+                                        type="color"
+                                        value={font}
+                                        onChange={(e) => setFont(e.target.value)}
+                                        className="mt-1 block w-full border-gray-300 rounded-md"
                                     />
                                 </div>
                                 <div className="mb-4">

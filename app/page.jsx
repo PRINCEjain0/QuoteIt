@@ -10,7 +10,12 @@ import {
   MapPinIcon,
 } from "@heroicons/react/24/outline";
 
+
+
+
 export default function Home() {
+
+
   return (
     <>
       <div className="min-h-screen bg-gray-100">
