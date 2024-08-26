@@ -1,4 +1,4 @@
-"use client"; // Ensure this component is treated as a client component
+"use client";
 
 import React, { useState } from "react";
 import Slider from "react-slick";
@@ -40,8 +40,6 @@ const PrevArrow = ({ onClick, currentSlide }) => {
     );
 };
 
-
-
 const ExpandedPostView = ({ post, onClose }) => {
     const { data: session } = useSession();
 
@@ -49,8 +47,6 @@ const ExpandedPostView = ({ post, onClose }) => {
     const [bgOpacity, setBgOpacity] = useState(0.5);
     const [padding, setPadding] = useState("0.7em");
     const [font, setFont] = useState("#000000")
-
-
 
     const settings = {
         dots: true,
@@ -60,8 +56,8 @@ const ExpandedPostView = ({ post, onClose }) => {
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
-        adaptiveHeight: true,
-        className: "overflow-hidden"
+        adaptiveHeight: false,
+        className: "h-full overflow-hidden"
     };
 
     const formatText = (text) => {
@@ -78,7 +74,6 @@ const ExpandedPostView = ({ post, onClose }) => {
                     className="goo"
                     style={{
                         backgroundColor: `${bgColor}${Math.round(bgOpacity * 255).toString(16).padStart(2, '0')}`,
-                        // color: "#000000",
                         padding: "0.1em 1em",
                         borderRadius: "0.5em",
                         boxDecorationBreak: "clone",
@@ -92,9 +87,17 @@ const ExpandedPostView = ({ post, onClose }) => {
     };
 
     const styles = `
-   
+   .slick-slider, .slick-list, .slick-track {
+    height: 100%;
+  }
+  .slick-slide > div {
+    height: 100%;
+  }
    .goo {
-      font-size: 1rem;
+      font-size: 0.8rem;
+      @media (min-width: 768px) {
+        font-size: 1rem;
+      }
       line-height: 1.3;
       display: inline; 
       box-decoration-break: clone;
@@ -110,68 +113,88 @@ const ExpandedPostView = ({ post, onClose }) => {
     );
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
+        <div className="fixed inset-0 z-0 flex items-center justify-center bg-black bg-opacity-75 p-4">
             <StyleTag />
-            <div className="relative w-full max-w-md h-auto flex bg-white rounded-lg overflow-hidden">
+            <div className="relative w-full max-w-4xl h-[80vh] flex flex-col md:flex-row bg-white rounded-lg overflow-hidden">
                 <button
                     onClick={onClose}
                     className="absolute top-2 right-2 z-20 p-1 bg-white bg-opacity-50 rounded-full"
                 >
                     <XMarkIcon className="w-4 h-4 sm:w-6 sm:h-6 text-black" />
                 </button>
-                <div className="flex w-full h-full">
-                    <div className="w-1/3 p-4 flex flex-col justify-between">
+                <div className="flex flex-col md:flex-row w-full h-full">
+                    <div className="order-2 md:order-1 w-full md:w-1/3 p-4 flex flex-col justify-between">
                         <div>
-                            <div className="flex items-center mb-4">
-                                <UserIcon className="w-8 h-8 text-[#3A1B0F] mr-2 fill-current" />
-                                <span className="text-sm sm:text-base text-[#3A1B0F]">
-                                    {session?.user?.name}
-                                </span>
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center">
+                                    <UserIcon className="w-6 h-6 text-[#3A1B0F] mr-2 fill-current" />
+                                    <span className="text-sm text-[#3A1B0F]">
+                                        {session?.user?.name}
+                                    </span>
+                                </div>
+                                <div className="flex items-center space-x-4 md:hidden">
+                                    <div className="flex items-center">
+                                        <HeartIcon className="w-5 h-5 text-[#3A1B0F] mr-1 fill-current" />
+                                        <span className="text-xs sm:text-sm text-[#3A1B0F]">
+                                            {post.likes}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <UserIcon className="w-5 h-5 text-[#3A1B0F] mr-1 fill-current" />
+                                        <span className="text-xs sm:text-sm text-[#3A1B0F]">
+                                            {post.views}
+                                        </span>
+                                    </div>
+                                    <button className="bg-white bg-opacity-50 rounded-full p-1">
+                                        <TrashIcon className="w-4 h-4 text-[#3A1B0F] fill-current" />
+                                    </button>
+                                </div>
                             </div>
                             <div className="w-full p-2 overflow-y-auto">
-                                {/* Input fields for customization */}
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700">Background Color:</label>
-                                    <input
-                                        type="color"
-                                        value={bgColor}
-                                        onChange={(e) => setBgColor(e.target.value)}
-                                        className="mt-1 block w-full border-gray-300 rounded-md"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700">Background Opacity:</label>
-                                    <input
-                                        type="range"
-                                        min="0"
-                                        max="1"
-                                        step="0.01"
-                                        value={bgOpacity}
-                                        onChange={(e) => setBgOpacity(e.target.value)}
-                                        className="mt-1 block w-full"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700">Font Colour</label>
-                                    <input
-                                        type="color"
-                                        value={font}
-                                        onChange={(e) => setFont(e.target.value)}
-                                        className="mt-1 block w-full border-gray-300 rounded-md"
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700">Padding:</label>
-                                    <input
-                                        type="text"
-                                        value={padding}
-                                        onChange={(e) => setPadding(e.target.value)}
-                                        className="mt-1 block w-full border-black rounded-md"
-                                    />
+                                <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
+                                    <div>
+                                        <label className="block text-xs md:text-sm font-medium text-gray-700">Background Color:</label>
+                                        <input
+                                            type="color"
+                                            value={bgColor}
+                                            onChange={(e) => setBgColor(e.target.value)}
+                                            className="mt-1 block w-full border-gray-300 rounded-md"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs md:text-sm font-medium text-gray-700">Background Opacity:</label>
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="1"
+                                            step="0.01"
+                                            value={bgOpacity}
+                                            onChange={(e) => setBgOpacity(e.target.value)}
+                                            className="mt-1 block w-full"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs md:text-sm font-medium text-gray-700">Font Color:</label>
+                                        <input
+                                            type="color"
+                                            value={font}
+                                            onChange={(e) => setFont(e.target.value)}
+                                            className="mt-1 block w-full border-gray-300 rounded-md"
+                                        />
+                                    </div>
+                                    <div className="">
+                                        <label className="block text-sm font-medium text-gray-700">Padding:</label>
+                                        <input
+                                            type="text"
+                                            value={padding}
+                                            onChange={(e) => setPadding(e.target.value)}
+                                            className="mt-1 block w-full border-black rounded-md"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex items-center space-x-4">
+                        <div className="hidden md:flex items-center space-x-4">
                             <div className="flex items-center">
                                 <HeartIcon className="w-5 h-5 text-[#3A1B0F] mr-1 fill-current" />
                                 <span className="text-xs sm:text-sm text-[#3A1B0F]">
@@ -184,21 +207,19 @@ const ExpandedPostView = ({ post, onClose }) => {
                                     {post.views}
                                 </span>
                             </div>
-                            <button
-                                className=" bg-white bg-opacity-50 rounded-full"
-                            >
-                                <TrashIcon className="w-4 h-4 text-[#3A1B0F] fill-current " />
+                            <button className="bg-white bg-opacity-50 rounded-full">
+                                <TrashIcon className="w-4 h-4 text-[#3A1B0F] fill-current" />
                             </button>
                         </div>
                     </div>
-                    <div className="w-2/3 h-full">
+                    <div className="order-1 md:order-2 w-full md:w-2/3 h-[50vh] md:h-full">
                         <Slider {...settings} className="w-full h-full">
                             {post.images.map((img, index) => (
                                 <div key={index} className="relative h-full">
                                     <img
                                         src={img.imageUrl}
                                         alt={`Post ${post.id} - Image ${index + 1}`}
-                                        className="max-w-full max-h-full object-contain"
+                                        className="w-full h-full object-cover"
                                     />
                                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                                         {formatText(img.desc)}
@@ -214,3 +235,6 @@ const ExpandedPostView = ({ post, onClose }) => {
 };
 
 export default ExpandedPostView;
+
+
+

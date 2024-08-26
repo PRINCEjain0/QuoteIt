@@ -63,9 +63,12 @@ const PostCard = () => {
                                     </span>
                                 </div>
                             )}
-                            <div
-                                className="absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-md text-white font-bold text-lg px-4 line-clamp-2">
-                                {post.images && post.images.length > 0 ? post.images[0].desc : ""}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="bg-black bg-opacity-50 text-white font-semibold text-lg px-4 py-2 rounded-md text-center max-w-[80%]">
+                                    {post.images && post.images.length > 0
+                                        ? post.images[0].desc.slice(0, 100) + (post.images[0].desc.length > 100 ? '...' : '')
+                                        : ""}
+                                </div>
                             </div>
                         </div>
                         <div className="absolute bottom-2 left-2 flex items-center space-x-2 text-white text-sm bg-black bg-opacity-50 rounded-full px-3 py-1">
