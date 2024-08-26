@@ -71,7 +71,7 @@ const PostCard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="absolute bottom-2 left-2 flex items-center space-x-2 text-white text-sm bg-black bg-opacity-50 rounded-full px-3 py-1">
+                        {/* <div className="absolute bottom-2 left-2 flex items-center space-x-2 text-white text-sm bg-black bg-opacity-50 rounded-full px-3 py-1">
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -86,7 +86,7 @@ const PostCard = () => {
                                 <UserIcon className="w-4 h-4 text-[#3A1B0F] mr-1 fill-current" />
                                 <span>{post.views || 0}</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 ))}
             </div>

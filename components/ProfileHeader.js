@@ -81,7 +81,7 @@ export default function ProfileHeader({ session }) {
                         {profile.username}
                     </h1>
                 )}
-                <div className="flex justify-center sm:justify-start mb-2 sm:mb-4">
+                {/* <div className="flex justify-center sm:justify-start mb-2 sm:mb-4">
                     <span className="mr-4 sm:mr-8 text-[#5C4033]">
                         {profile.posts} posts
                     </span>
@@ -91,7 +91,7 @@ export default function ProfileHeader({ session }) {
                     <span className="mr-4 sm:mr-8 text-[#5C4033]">
                         {profile.following} following
                     </span>
-                </div>
+                </div> */}
                 {isOwner && isEditing ? (
                     <textarea
                         value={editedBio}

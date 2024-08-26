@@ -132,7 +132,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                                         {session?.user?.name}
                                     </span>
                                 </div>
-                                <div className="flex items-center space-x-4 md:hidden">
+                                {/* <div className="flex items-center space-x-4 md:hidden">
                                     <div className="flex items-center">
                                         <HeartIcon className="w-5 h-5 text-[#3A1B0F] mr-1 fill-current" />
                                         <span className="text-xs sm:text-sm text-[#3A1B0F]">
@@ -148,7 +148,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                                     <button className="bg-white bg-opacity-50 rounded-full p-1">
                                         <TrashIcon className="w-4 h-4 text-[#3A1B0F] fill-current" />
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="w-full p-2 overflow-y-auto">
                                 <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
@@ -182,7 +182,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                                             className="mt-1 block w-full border-gray-300 rounded-md"
                                         />
                                     </div>
-                                    <div className="">
+                                    {/* <div className="">
                                         <label className="block text-sm font-medium text-gray-700">Padding:</label>
                                         <input
                                             type="text"
@@ -190,11 +190,11 @@ const ExpandedPostView = ({ post, onClose }) => {
                                             onChange={(e) => setPadding(e.target.value)}
                                             className="mt-1 block w-full border-black rounded-md"
                                         />
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
-                        <div className="hidden md:flex items-center space-x-4">
+                        {/* <div className="hidden md:flex items-center space-x-4">
                             <div className="flex items-center">
                                 <HeartIcon className="w-5 h-5 text-[#3A1B0F] mr-1 fill-current" />
                                 <span className="text-xs sm:text-sm text-[#3A1B0F]">
@@ -210,7 +210,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                             <button className="bg-white bg-opacity-50 rounded-full">
                                 <TrashIcon className="w-4 h-4 text-[#3A1B0F] fill-current" />
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="order-1 md:order-2 w-full md:w-2/3 h-[50vh] md:h-full">
                         <Slider {...settings} className="w-full h-full">
