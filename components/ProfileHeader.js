@@ -1,14 +1,11 @@
 "use client"
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function ProfileHeader({ session }) {
     const [profile, setProfile] = useState({
-        username: "travelenthusiast",
-        profilePicture: "https://images.unsplash.com/photo-1518288774672-b94e808873ff?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGNhdHxlbnwwfHwwfHx8MA%3D%3D",
-        posts: 3,
-        followers: 1337,
-        following: 420,
-        bio: "Adventure seeker | Photography lover | World explorer",
+        username: session?.user?.name || "User",
+        profilePicture: session?.user?.image || "https://example.com/default-avatar.jpg",
+        bio: null,
     });
 
     const isOwner = session?.user?.email;
@@ -19,16 +16,61 @@ export default function ProfileHeader({ session }) {
     const [editedPhoto, setEditedPhoto] = useState(profile.profilePicture);
     const fileInputRef = useRef(null);
 
-    const handleSave = () => {
-        setProfile(prev => ({
-            ...prev,
-            username: editedUsername,
-            bio: editedBio,
-            profilePicture: editedPhoto
-        }));
-        setIsEditing(false);
-    };
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await fetch(`/api/profile/${session.user.id}`);
+                const data = await response.json();
+                setProfile({
+                    username: data.username || session?.user?.name || "User",
+                    profilePicture: data.profilePicture || session?.user?.image || "https://example.com/default-avatar.jpg",
+                    bio: data.bio || null,
+                });
+                setEditedUsername(data.username || session?.user?.name || "User");
+                setEditedBio(data.bio || null);
+                setEditedPhoto(data.profilePicture || session?.user?.image || "https://example.com/default-avatar.jpg");
+            } catch (error) {
+                console.error("Error fetching profile:", error);
+            }
+        };
 
+        if (session?.user?.id) {
+            fetchProfile();
+        }
+    }, [session]);
+
+    const handleSave = async () => {
+        try {
+            const response = await fetch(`/api/profile/${session.user.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: editedUsername,
+                    bio: editedBio,
+                    profilePicture: editedPhoto
+                }),
+            });
+
+            if (response.ok) {
+                const updatedData = await response.json();
+                setProfile({
+                    username: updatedData.username,
+                    bio: updatedData.bio,
+                    profilePicture: updatedData.profilePicture
+                });
+                setIsEditing(false);
+            } else {
+                const errorData = await response.json();
+                console.error("Failed to update profile:", errorData);
+                alert(`Failed to update profile: ${errorData.message || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            alert(`Error updating profile: ${error.message}`);
+        }
+    };
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -81,26 +123,18 @@ export default function ProfileHeader({ session }) {
                         {profile.username}
                     </h1>
                 )}
-                {/* <div className="flex justify-center sm:justify-start mb-2 sm:mb-4">
-                    <span className="mr-4 sm:mr-8 text-[#5C4033]">
-                        {profile.posts} posts
-                    </span>
-                    <span className="mr-4 sm:mr-8 text-[#5C4033]">
-                        {profile.followers} followers
-                    </span>
-                    <span className="mr-4 sm:mr-8 text-[#5C4033]">
-                        {profile.following} following
-                    </span>
-                </div> */}
                 {isOwner && isEditing ? (
                     <textarea
                         value={editedBio}
                         onChange={(e) => setEditedBio(e.target.value)}
                         className="w-full p-2 border rounded text-[#5C4033]"
                         rows="3"
+                        placeholder="Add a bio"
                     />
                 ) : (
-                    <p className="max-w-md text-[#5C4033]">{profile.bio}</p>
+                    <p className="max-w-md text-[#5C4033]">
+                        {profile.bio ? profile.bio : "Add a bio"}
+                    </p>
                 )}
                 {isOwner && (
                     <div className="mt-4">

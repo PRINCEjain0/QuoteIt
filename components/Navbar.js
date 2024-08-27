@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
+import Search from "./Search"
 
 const Navbar = () => {
     const router = useRouter();
@@ -31,6 +32,7 @@ const Navbar = () => {
                 {/* <Image src="/Logo.png" alt="Logo" width={32} height={32} /> */}
                 <h1 className="text-xl text-[#3A1B0F]">QuoteIt</h1>
             </div>
+            <Search />
             <div className="flex items-center space-x-4">
                 {status === "loading" ? (
                     <p></p>
