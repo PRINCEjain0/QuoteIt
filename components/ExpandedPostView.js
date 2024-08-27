@@ -112,6 +112,51 @@ const ExpandedPostView = ({ post, onClose }) => {
         <style dangerouslySetInnerHTML={{ __html: styles }} />
     );
 
+
+    const splitTextIntoChunks = (text, maxChunkLength) => {
+        const words = text.split(' ');
+        const chunks = [];
+        let currentChunk = '';
+
+        words.forEach(word => {
+            if ((currentChunk + ' ' + word).length <= maxChunkLength) {
+                currentChunk += (currentChunk ? ' ' : '') + word;
+            } else {
+                chunks.push(currentChunk);
+                currentChunk = word;
+            }
+        });
+
+        if (currentChunk) {
+            chunks.push(currentChunk);
+        }
+
+        return chunks;
+    };
+
+    const renderImageSlides = () => {
+        const slides = [];
+        post.images.forEach((img, index) => {
+            const textChunks = splitTextIntoChunks(img.desc, 500);
+
+            textChunks.forEach((chunk, chunkIndex) => {
+                slides.push(
+                    <div key={`${index}-${chunkIndex}`} className="relative h-full">
+                        <img
+                            src={img.imageUrl}
+                            alt={`Post ${post.id} - Image ${index + 1} - Part ${chunkIndex + 1}`}
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            {formatText(chunk)}
+                        </div>
+                    </div>
+                );
+            });
+        });
+        return slides;
+    };
+
     return (
         <div className="fixed inset-0 z-0 flex items-center justify-center bg-black bg-opacity-75 p-4">
             <StyleTag />
@@ -214,18 +259,7 @@ const ExpandedPostView = ({ post, onClose }) => {
                     </div>
                     <div className="order-1 md:order-2 w-full md:w-2/3 h-[50vh] md:h-full">
                         <Slider {...settings} className="w-full h-full">
-                            {post.images.map((img, index) => (
-                                <div key={index} className="relative h-full">
-                                    <img
-                                        src={img.imageUrl}
-                                        alt={`Post ${post.id} - Image ${index + 1}`}
-                                        className="w-full h-full object-cover"
-                                    />
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        {formatText(img.desc)}
-                                    </div>
-                                </div>
-                            ))}
+                            {renderImageSlides()}
                         </Slider>
                     </div>
                 </div>
