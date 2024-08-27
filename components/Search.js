@@ -10,10 +10,11 @@ const Home = () => {
     const { data: session, status } = useSession();
     const [profiles, setProfiles] = useState([]);
     const [showProfiles, setShowProfiles] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
-    const fetchProfiles = async () => {
+    const fetchProfiles = async (search = "") => {
         try {
-            const response = await fetch('/api/profiles');
+            const response = await fetch(`/api/profiles?search=${encodeURIComponent(search)}`);
             console.log('Response status:', response.status);
             console.log('Response headers:', response.headers);
 
@@ -31,10 +32,14 @@ const Home = () => {
             console.error("Error fetching profiles:", error);
         }
     };
-    const handleSearchClick = () => {
-        if (!showProfiles) {
-            fetchProfiles();
-        }
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        fetchProfiles(searchTerm);
     };
 
     const handleProfileSelect = (profileId) => {
@@ -44,15 +49,18 @@ const Home = () => {
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Explore Profiles</h1>
-            <div className="mb-4">
+            <form onSubmit={handleSearchSubmit} className="mb-4">
                 <input
                     type="text"
-                    placeholder="Click to see all profiles"
-                    onClick={handleSearchClick}
-                    className="w-full p-2 border rounded cursor-pointer"
-                    readOnly
+                    placeholder="Search profiles by username"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="w-full p-2 border rounded"
                 />
-            </div>
+                <button type="submit" className="mt-2 bg-blue-500 text-white p-2 rounded">
+                    Search
+                </button>
+            </form>
             {showProfiles && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {profiles.map(profile => (
@@ -70,12 +78,10 @@ const Home = () => {
                                     className="rounded-full mr-2"
                                 />
                                 <div>
-                                    {/* <h2 className="font-bold">{profile.name || profile.email}</h2> */}
                                     <p className="text-sm text-gray-500">@{profile.profileName}</p>
                                 </div>
                             </div>
                             <p className="text-sm mb-2">{profile.bio}</p>
-                            {/* <p className="text-sm text-gray-500">Posts: {profile._count.posts}</p> */}
                         </div>
                     ))}
                 </div>

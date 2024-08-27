@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '../../../../lib/db';
 
 export async function GET(request, { params }) {
+    console.log(params)
     try {
         const profile = await db.user.findUnique({
             where: { id: params.id },
