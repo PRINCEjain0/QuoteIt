@@ -8,7 +8,7 @@ export async function GET(request) {
 
         const profiles = await db.user.findMany({
             where: {
-                name: {
+                username: {
                     contains: search.toLowerCase(),
                 },
             },
