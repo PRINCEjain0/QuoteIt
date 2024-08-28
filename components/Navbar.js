@@ -38,7 +38,7 @@ const Navbar = () => {
                     <p></p>
                 ) : status === "authenticated" ? (
                     <>
-                        <p className="text-[#3A1B0F]" >Welcome, {session.user.name || session.user.email}</p>
+                        {/* <p className="text-[#3A1B0F]" >Welcome, {session.user.name || session.user.email}</p> */}
                         <button
                             onClick={handleSignOut}
                             className="bg-[#F9F16F] text-[#3A1B0F] px-4 py-2 rounded"

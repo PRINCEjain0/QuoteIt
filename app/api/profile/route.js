@@ -40,14 +40,13 @@ export async function PUT(request) {
     try {
         const body = await request.json();
 
-        // Optionally validate or process Base64 data here
 
         const updatedProfile = await db.user.update({
             where: { id: userId },
             data: {
                 username: body.username,
                 bio: body.bio,
-                image: body.image // Base64-encoded string
+                image: body.image
             }
         });
 
