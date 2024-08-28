@@ -11,13 +11,17 @@ export default function Home() {
 
     return (
         <>
-            <Navbar />
-            <div className="max-w-4xl mx-auto px-4 py-8">
+            <div className="min-h-screen bg-gray-100 ">
                 <div className="container mx-auto px-4">
+                    <Navbar />
+                    <div className="max-w-4xl mx-auto px-4 py-8">
+                        <div className="container mx-auto px-4">
 
-                    <ProfileHeader session={session} />
-                    <AddPost />
-                    <PhotoGrid />
+                            <ProfileHeader session={session} />
+                            <AddPost />
+                            <PhotoGrid />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
