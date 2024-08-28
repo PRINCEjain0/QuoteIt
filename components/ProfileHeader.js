@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 
 export default function ProfileHeader({ session }) {
     const [profile, setProfile] = useState({
-        username: session?.user?.name || "User",
+        username: "User",
         image: session?.user?.image || "https://example.com/default-avatar.jpg",
         bio: null,
     });

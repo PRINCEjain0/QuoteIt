@@ -67,10 +67,10 @@ const Home = () => {
                                         }}
                                     />
                                     <div>
-                                        <p className="text-sm text-gray-500">@{profile.profileName}</p>
+                                        <p className="text-sm text-gray-500">@{profile.username}</p>
                                     </div>
                                 </div>
-                                <p className="text-sm mb-2">{profile.bio}</p>
+                                {/* <p className="text-sm mb-2">{profile.bio}</p> */}
                             </div>
                         ))}
                     </div>

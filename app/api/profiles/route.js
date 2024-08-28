@@ -14,7 +14,7 @@ export async function GET(request) {
             },
             select: {
                 id: true,
-                profileName: true,
+                username: true,
                 image: true,
                 bio: true,
             },
