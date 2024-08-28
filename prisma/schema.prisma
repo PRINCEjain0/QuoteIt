@@ -14,7 +14,7 @@ model User {
   profileName   String?   @unique
   email         String?   @unique
   emailVerified DateTime?
-  image         String?
+  image         String?   @db.Text
   password      String?
   bio           String?   @db.Text
   accounts      Account[]
