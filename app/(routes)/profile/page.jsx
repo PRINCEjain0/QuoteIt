@@ -10,13 +10,16 @@ export default function Home() {
     // console.log(session)
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8">
-            <div className="container mx-auto px-4">
-                <Navbar />
-                <ProfileHeader session={session} />
-                <AddPost />
-                <PhotoGrid />
+        <>
+            <Navbar />
+            <div className="max-w-4xl mx-auto px-4 py-8">
+                <div className="container mx-auto px-4">
+
+                    <ProfileHeader session={session} />
+                    <AddPost />
+                    <PhotoGrid />
+                </div>
             </div>
-        </div>
+        </>
     );
 }
