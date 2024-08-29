@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import { db } from '../../../../lib/db';
 import { auth } from "@/auth";
 
-export async function GET(request) {
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+export async function GET(request, { params }) {
+    const userId = params.id;
+    console.log("Requested userId:", userId);
 
     if (!userId) {
         return NextResponse.json({ message: 'User ID is required' }, { status: 400 });
@@ -45,15 +45,15 @@ export async function GET(request) {
                 imageUrl: image.imageUrl,
                 desc: image.desc
             })),
-            views: 0 // Replace with actual view count if implemented
+            views: 0
         }));
 
         const userData = {
-            profile,
+            user: profile,
             posts: formattedPosts
         };
 
-        console.log(userData);
+        console.log("Returned userData:", userData);
 
         return NextResponse.json(userData);
     } catch (error) {

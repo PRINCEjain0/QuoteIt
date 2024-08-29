@@ -72,7 +72,7 @@ export default function AddPost() {
         <div className="flex flex-col items-center">
             {!showForm ? (
                 <button
-                    className="bg-blue-500 py-2 px-12 rounded-md mb-4 text-white"
+                    className="bg-[#5C4033] py-2 px-12 rounded-md mb-4 text-white"
                     onClick={handleButtonClick}
                 >
                     Add Post
@@ -131,7 +131,7 @@ export default function AddPost() {
                     ))}
 
                     <button
-                        className="bg-blue-500 py-2 px-12 rounded-md text-white mb-2 mr-4"
+                        className="bg-[#5C4033] py-2 px-12 rounded-md text-white mb-2 mr-4"
                         onClick={addPost}
                         disabled={loading}
                     >
@@ -140,7 +140,7 @@ export default function AddPost() {
                     <button
                         type="button"
                         onClick={handleAddPostItem}
-                        className="mb-4 bg-blue-500 py-2 px-12 rounded-md"
+                        className="mb-4 bg-[#5C4033] py-2 text-white px-12 rounded-md"
                     >
                         Add Another Image
                     </button>

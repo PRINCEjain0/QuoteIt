@@ -7,6 +7,8 @@ export default function ProfileHeader({ session }) {
         image: session?.user?.image || "https://example.com/default-avatar.jpg",
         bio: null,
     });
+    const [loading, setLoading] = useState(true);
+
 
     const isOwner = !!session?.user?.email;
 
@@ -34,6 +36,8 @@ export default function ProfileHeader({ session }) {
                 setEditedImage(data.image || session?.user?.image || "https://example.com/default-avatar.jpg");
             } catch (error) {
                 console.error("Error fetching profile:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -41,7 +45,9 @@ export default function ProfileHeader({ session }) {
             fetchProfile();
         }
     }, [session]);
-
+    if (loading) {
+        return <div>Loading...</div>;
+    }
     const handleSave = async () => {
         try {
             const response = await fetch(`/api/profile`, {
