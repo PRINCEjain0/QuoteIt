@@ -15,13 +15,13 @@ export default function UserProfilePage() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                console.log("Fetching data for user ID:", id);
+                // console.log("Fetching data for user ID:", id);
                 const response = await fetch(`/api/profile/${id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch user data');
                 }
                 const data = await response.json();
-                console.log("Received data:", data);
+                // console.log("Received data:", data);
                 setUserData(data);
             } catch (error) {
                 console.error('Error fetching user data:', error);

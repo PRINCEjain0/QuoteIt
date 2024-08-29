@@ -10,8 +10,8 @@ const Navbar = () => {
     const { data: session, status } = useSession();
 
     useEffect(() => {
-        console.log("Session status:", status);
-        console.log("Session data:", session);
+        // console.log("Session status:", status);
+        // console.log("Session data:", session);
     }, [session, status]);
 
     const handleSignIn = () => {
