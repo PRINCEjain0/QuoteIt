@@ -59,8 +59,10 @@ const ExpandedPostView = ({ post, onClose }) => {
         adaptiveHeight: false,
         className: "h-full overflow-hidden"
     };
-
     const formatText = (text) => {
+        // Split the text by newlines, trim each line, and filter out empty lines
+        const lines = text.split('\n').map(line => line.trim()).filter(line => line !== '');
+
         return (
             <div
                 className="inline-block"
@@ -70,18 +72,24 @@ const ExpandedPostView = ({ post, onClose }) => {
                     textAlign: "center",
                 }}
             >
-                <span
-                    className="goo"
-                    style={{
-                        backgroundColor: `${bgColor}${Math.round(bgOpacity * 255).toString(16).padStart(2, '0')}`,
-                        padding: "0.1em 1em",
-                        borderRadius: "0.5em",
-                        boxDecorationBreak: "clone",
-                        WebkitBoxDecorationBreak: "clone",
-                    }}
-                >
-                    {text}
-                </span>
+                {lines.map((line, index) => (
+                    <React.Fragment key={index}>
+                        <span
+                            className="goo"
+                            style={{
+                                backgroundColor: `${bgColor}${Math.round(bgOpacity * 255).toString(16).padStart(2, '0')}`,
+                                padding: "0.1em 1em",
+                                borderRadius: "0.5em",
+                                boxDecorationBreak: "clone",
+                                WebkitBoxDecorationBreak: "clone",
+                                whiteSpace: "pre-wrap",
+                            }}
+                        >
+                            {line}
+                        </span>
+                        {index < lines.length - 1 && <br />}
+                    </React.Fragment>
+                ))}
             </div>
         );
     };
