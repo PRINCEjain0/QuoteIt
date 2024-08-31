@@ -3,16 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import Image from "next/image";
 
 const Navbar = () => {
     const router = useRouter();
     const { data: session, status } = useSession();
-
-    useEffect(() => {
-        // console.log("Session status:", status);
-        // console.log("Session data:", session);
-    }, [session, status]);
 
     const handleSignIn = () => {
         router.push("/signin");
@@ -20,31 +14,26 @@ const Navbar = () => {
 
     const handleSignOut = async () => {
         await signOut({ redirect: false });
-        // router.push("/signin");
     };
 
     return (
-        <nav className="flex items-center justify-between p-4 ">
-            <div className="flex items-center space-x-2">
-                {/* <Image src="/Logo.png" alt="Logo" width={32} height={32} /> */}
+        <nav className="flex items-center justify-between p-4 bg-gray-100">
+            <div className="flex-shrink-0">
                 <h1 className="text-xl text-[#3A1B0F] font-semibold">QuoteIt</h1>
             </div>
-            <div className="w-full max-w-md mx-auto">
+            <div className="flex-grow mx-4">
                 <Search />
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex-shrink-0">
                 {status === "loading" ? (
                     <p></p>
                 ) : status === "authenticated" ? (
-                    <>
-                        {/* <p className="text-[#3A1B0F]" >Welcome, {session.user.name || session.user.email}</p> */}
-                        <button
-                            onClick={handleSignOut}
-                            className="bg-[#F9F16F] text-[#3A1B0F] px-4 py-2 rounded font-medium"
-                        >
-                            Sign Out
-                        </button>
-                    </>
+                    <button
+                        onClick={handleSignOut}
+                        className="bg-[#F9F16F] text-[#3A1B0F] px-4 py-2 rounded font-medium"
+                    >
+                        Sign Out
+                    </button>
                 ) : (
                     <button
                         onClick={handleSignIn}
@@ -53,15 +42,6 @@ const Navbar = () => {
                         Sign In
                     </button>
                 )}
-                <div className="rounded-full overflow-hidden w-10 h-10">
-                    {/* <Image
-                        src={session?.user?.image || "/default-profile-pic.jpg"}
-                        alt="Profile"
-                        width={40}
-                        height={40}
-                        className="object-cover"
-                    /> */}
-                </div>
             </div>
         </nav>
     );
@@ -97,13 +77,13 @@ const Search = () => {
     };
 
     return (
-        <div className="relative">
+        <div className="relative w-full">
             <input
                 type="text"
                 placeholder="Search profiles by username"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded bg-white"
             />
             {showProfiles && (
                 <div className="absolute mt-2 w-full bg-white shadow-lg rounded-md z-10">
@@ -139,8 +119,6 @@ const Search = () => {
         </div>
     );
 };
-
-
 
 export default function CombinedComponent() {
     return (

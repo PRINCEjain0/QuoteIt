@@ -67,7 +67,7 @@ const PostCard = () => {
                 <Stories />
                 <div className="grid grid-cols-1 gap-4">
                     {samplePosts.map((post) => (
-                        <div key={post.id} className="relative aspect-w-16 aspect-h-6 h-dvh">
+                        <div key={post.id} className="relative aspect-w-16 aspect-h-6 h-dvh mb-8">
                             {post.images && post.images.length > 0 ? (
                                 <Slider {...settings} className="h-full">
                                     {post.images.map((image, imgIndex) => (
