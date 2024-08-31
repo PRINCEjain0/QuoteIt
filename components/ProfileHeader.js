@@ -96,7 +96,7 @@ export default function ProfileHeader({ session }) {
     };
 
     return (
-        <div className="flex flex-col ml-8 sm:flex-row items-center mb-8 sm:mb-12">
+        <div className="flex flex-col  sm:flex-row items-center mb-8 sm:mb-12">
             <div className="relative">
                 <img
                     src={isEditing ? editedImage : profile.image}

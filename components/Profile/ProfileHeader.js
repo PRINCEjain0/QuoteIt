@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ProfileHeader({ profile }) {
     return (
-        <div className="flex flex-col ml-8 sm:flex-row items-center mb-8 sm:mb-12">
+        <div className="flex flex-col  sm:flex-row items-center mb-8 sm:mb-12">
             <div className="relative">
                 <img
                     src={profile.image}
