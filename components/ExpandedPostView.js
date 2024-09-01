@@ -8,11 +8,16 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
     XMarkIcon,
-    TrashIcon
+    TrashIcon,
+    SwatchIcon,
+    PaintBrushIcon,
+    AdjustmentsHorizontalIcon
 } from "@heroicons/react/24/outline";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useSession } from "next-auth/react";
+
+import { AiOutlineFontColors } from "react-icons/ai";
 
 const NextArrow = ({ onClick, currentSlide, slideCount }) => {
     return (
@@ -204,18 +209,29 @@ const ExpandedPostView = ({ post, onClose }) => {
                                 </div> */}
                             </div>
                             <div className="w-full p-2 overflow-y-auto">
-                                <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
-                                    <div>
-                                        <label className="block text-xs md:text-sm font-medium text-gray-700">Background Color:</label>
+                                <div className="grid grid-cols-3 gap-2 md:grid-cols-1 items-start justify-between space-x-2">
+                                    <div className="flex flex-col items-center">
+                                        <PaintBrushIcon className="w-20 h-6 text-[#3A1B0F] fill-current mb-1" />
                                         <input
                                             type="color"
                                             value={bgColor}
                                             onChange={(e) => setBgColor(e.target.value)}
-                                            className="mt-1 block w-full border-gray-300 rounded-md"
+                                            className="w-full h-8 rounded-md"
+                                            title="Background Color"
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-xs md:text-sm font-medium text-gray-700">Background Opacity:</label>
+                                    <div className="flex flex-col items-center">
+                                        <AiOutlineFontColors className="w-20 h-6 text-[#3A1B0F] fill-current mb-1" />
+                                        <input
+                                            type="color"
+                                            value={font}
+                                            onChange={(e) => setFont(e.target.value)}
+                                            className="w-full h-8 rounded-md "
+                                            title="Font Color"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col items-center">
+                                        <AdjustmentsHorizontalIcon className="w-6 h-6 text-[#3A1B0F] fill-current mb-1" />
                                         <input
                                             type="range"
                                             min="0"
@@ -223,27 +239,10 @@ const ExpandedPostView = ({ post, onClose }) => {
                                             step="0.01"
                                             value={bgOpacity}
                                             onChange={(e) => setBgOpacity(e.target.value)}
-                                            className="mt-1 block w-full"
+                                            className="w-full h-8"
+                                            title="Background Opacity"
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-xs md:text-sm font-medium text-gray-700">Font Color:</label>
-                                        <input
-                                            type="color"
-                                            value={font}
-                                            onChange={(e) => setFont(e.target.value)}
-                                            className="mt-1 block w-full border-gray-300 rounded-md"
-                                        />
-                                    </div>
-                                    {/* <div className="">
-                                        <label className="block text-sm font-medium text-gray-700">Padding:</label>
-                                        <input
-                                            type="text"
-                                            value={padding}
-                                            onChange={(e) => setPadding(e.target.value)}
-                                            className="mt-1 block w-full border-black rounded-md"
-                                        />
-                                    </div> */}
                                 </div>
                             </div>
                         </div>
