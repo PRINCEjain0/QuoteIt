@@ -10,11 +10,18 @@ import {
   MapPinIcon,
 } from "@heroicons/react/24/outline";
 
+import { useRouter } from "next/navigation";
 
 
 
 export default function Home() {
+  const router = useRouter();
 
+  const profile = () => {
+
+    router.push("/profile");
+
+  }
 
   return (
     <>
@@ -25,8 +32,8 @@ export default function Home() {
           <PostCard />
         </div>
       </div>
-      <footer className="fixed bottom-0 w-full bg-[#F9F16F] flex justify-around rounded p-4">
-        <button className="p-2 rounded" aria-label="Home">
+      <button className="fixed bottom-0  bg-[#F9F16F] w-full flex justify-center rounded p-4  sm:hidden" onClick={profile}>
+        {/* <button className="p-2 rounded" aria-label="Home">
           <HomeIcon className="w-6 h-6 text-[#3A1B0F] fill-current" />
         </button>
         <button className="p-2 rounded" aria-label="User">
@@ -40,8 +47,12 @@ export default function Home() {
         </button>
         <button className="p-2 rounded" aria-label="Location">
           <MapPinIcon className="w-6 h-6 text-[#3A1B0F] fill-current" />
-        </button>
-      </footer>
+        </button> */}
+
+        {/* <button className="bg-[#F9F16F] text-[#3A1B0F] px-4 py-2 rounded font-medium" aria-label="User" onClick={profile}> */}
+        Add Post
+        {/* </button> */}
+      </button>
     </>
   );
 }

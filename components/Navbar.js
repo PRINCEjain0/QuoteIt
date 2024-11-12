@@ -15,7 +15,11 @@ const Navbar = () => {
     const handleSignOut = async () => {
         await signOut({ redirect: false });
     };
+    const profile = () => {
 
+        router.push("/profile");
+
+    }
     return (
         <nav className="flex items-center justify-between p-4 bg-gray-100">
             <div className="flex-shrink-0">
@@ -24,16 +28,26 @@ const Navbar = () => {
             <div className="flex-grow mx-4">
                 <Search />
             </div>
+
+
+
             <div className="flex-shrink-0">
                 {status === "loading" ? (
                     <p></p>
                 ) : status === "authenticated" ? (
-                    <button
-                        onClick={handleSignOut}
-                        className="bg-[#F9F16F] text-[#3A1B0F] px-4 py-2 rounded font-medium"
-                    >
-                        Sign Out
-                    </button>
+                    <>
+                        <div className="gap-x-2 flex" >
+                            <button
+                                onClick={handleSignOut}
+                                className="bg-[#F9F16F] text-[#3A1B0F] px-4 py-2 rounded font-medium"
+                            >
+                                Sign Out
+                            </button>
+                            <button className="hidden bg-[#F9F16F] text-[#3A1B0F] px-4 py-2 rounded font-medium sm:flex" aria-label="User" onClick={profile}>
+                                Add Post
+                            </button>
+                        </div>
+                    </>
                 ) : (
                     <button
                         onClick={handleSignIn}
@@ -43,6 +57,7 @@ const Navbar = () => {
                     </button>
                 )}
             </div>
+
         </nav>
     );
 };
